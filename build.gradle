@@ -32,6 +32,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Swagger
+    implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.20'
+
 }
 
 tasks.named('test') {
