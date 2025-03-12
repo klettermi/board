@@ -32,9 +32,18 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
     // Swagger
     implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.20'
+
+    // H2
+    runtimeOnly 'com.h2database:h2'
+
+    // jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'  // javax.xml.bind 의존성 추가
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'  // JAXB 실행 시간 라이브러리 추가
 
 }
 
