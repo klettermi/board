@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mi.board.domain.board.dto.BoardRequestDto;
+import mi.board.domain.user.entity.User;
 
 @Entity
 @Getter
@@ -23,6 +24,9 @@ public class Board {
 
     @Column
     private String contents;
+
+    @ManyToOne
+    private User user;
 
     public void update(BoardRequestDto newBoardRequestDto) {
         this.title = newBoardRequestDto.getTitle();

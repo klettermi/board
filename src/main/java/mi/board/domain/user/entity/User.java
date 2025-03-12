@@ -22,10 +22,14 @@ public class User{
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     @Builder
-    public User(String username, String password, String auth) {
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
 }
