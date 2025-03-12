@@ -8,7 +8,9 @@ public enum ErrorCode {
     USER_LOGIN_FAILURE(HttpStatus.BAD_REQUEST, "로그인 실패하였습니다."),
     UNAUTHORIZED_USER(HttpStatus.UNAUTHORIZED, "인증에 실패하였습니다."),
     JWT_EXPIRATION(HttpStatus.UNAUTHORIZED, "유효시간 만료, 재인증이 필요합니다."),
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다"),
+    BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 게시판 정보를 찾을 수 없습니다."),
+    ;
 
     private final HttpStatus httpStatus;
     private final String detail;
