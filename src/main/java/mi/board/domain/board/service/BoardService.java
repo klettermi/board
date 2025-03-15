@@ -57,7 +57,7 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElseThrow(
                 BoardNotFoundException::new);
 
-        validateUserAuthorization(userDetails.getUser(), board);
+        validateUserAuthorization(user, board);
 
         boardRepository.deleteById(boardId);
     }
