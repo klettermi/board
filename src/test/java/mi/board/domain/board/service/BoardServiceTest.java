@@ -5,6 +5,7 @@ import mi.board.domain.board.entity.Board;
 import mi.board.domain.board.exception.BoardNotFoundException;
 import mi.board.domain.board.exception.UnauthorizedAccessException;
 import mi.board.domain.board.repository.BoardRepository;
+import mi.board.domain.user.entity.Role;
 import mi.board.domain.user.entity.User;
 import mi.board.global.security.userdetails.UserDetailsImpl;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class BoardServiceTest {
         User user = User.builder()
                 .username("사용자명")
                 .password("123456")
-                .role("USER")
+                .role(Role.USER)
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
@@ -120,7 +121,7 @@ class BoardServiceTest {
         User user = User.builder()
                 .username("사용자명")
                 .password("123456")
-                .role("USER")
+                .role(Role.USER)
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
@@ -152,14 +153,14 @@ class BoardServiceTest {
         User user = User.builder()
                 .username("사용자명")
                 .password("123456")
-                .role("USER")
+                .role(Role.USER)
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
         User boardUser = User.builder()
                 .username("사용자명2")
                 .password("123456")
-                .role("USER")
+                .role(Role.USER)
                 .build();
 
         Long boardId = 1L;
@@ -189,7 +190,7 @@ class BoardServiceTest {
         User user = User.builder()
                 .username("사용자명")
                 .password("123456")
-                .role("USER")
+                .role(Role.USER)
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
@@ -217,14 +218,14 @@ class BoardServiceTest {
         User user = User.builder()
                 .username("사용자명")
                 .password("123456")
-                .role("USER")
+                .role(Role.USER)
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
         User boardUser = User.builder()
                 .username("사용자명2")
                 .password("123456")
-                .role("USER")
+                .role(Role.USER)
                 .build();
 
         Long boardId = 1L;
