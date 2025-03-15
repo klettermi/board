@@ -63,7 +63,7 @@ public class BoardService {
     }
 
     private void validateUserAuthorization(User user, Board board) {
-        if (!user.getUsername().equals(board.getUser().getUsername())) {
+        if (!user.getUsername().equals(board.getUser().getUsername()) && !user.isAdmin()) {
             throw new UnauthorizedAccessException();
         }
     }

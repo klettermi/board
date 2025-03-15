@@ -2,6 +2,7 @@ package mi.board.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import mi.board.domain.user.dto.AddUserRequest;
+import mi.board.domain.user.entity.Role;
 import mi.board.domain.user.entity.User;
 import mi.board.domain.user.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ public class UserService {
                 User.builder()
                         .username(request.getUsername())
                         .password(passwordEncoder.encode(request.getPassword()))
+                        .role(Role.USER)
                         .build()
                 ).getId();
     }

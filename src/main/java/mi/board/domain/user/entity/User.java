@@ -22,14 +22,19 @@ public class User{
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
+
+    public boolean isAdmin() {
+        return this.role == Role.ADMIN;
+    }
 
     @Builder
-    public User(String username, String password, String role) {
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.role = Role.USER;
     }
 
 }
