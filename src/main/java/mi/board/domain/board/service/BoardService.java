@@ -23,7 +23,7 @@ public class BoardService {
     public Board createBoard(BoardRequestDto boardRequestDto, UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
 
-        Board board = boardRequestDto.toEntity(user);
+        Board board = new Board(boardRequestDto, user);
         return boardRepository.save(board);
     }
 

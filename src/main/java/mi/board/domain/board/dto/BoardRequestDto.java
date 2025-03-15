@@ -10,12 +10,4 @@ import mi.board.domain.user.entity.User;
 public class BoardRequestDto {
     private String title;
     private String contents;
-
-    public Board toEntity(User user) {
-        return Board.builder()
-                .title(this.title)
-                .contents(this.contents)
-                .user(user)
-                .build();
-    }
 }

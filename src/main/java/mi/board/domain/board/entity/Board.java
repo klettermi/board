@@ -10,7 +10,6 @@ import mi.board.domain.user.entity.User;
 
 @Entity
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Board {
@@ -31,5 +30,11 @@ public class Board {
     public void update(BoardRequestDto newBoardRequestDto) {
         this.title = newBoardRequestDto.getTitle();
         this.contents = newBoardRequestDto.getContents();
+    }
+
+    public Board(BoardRequestDto boardRequestDto, User user) {
+        this.title = boardRequestDto.getTitle();
+        this.contents = boardRequestDto.getContents();
+        this.user = user;
     }
 }

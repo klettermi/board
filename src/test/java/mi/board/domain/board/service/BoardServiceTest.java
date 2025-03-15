@@ -45,7 +45,7 @@ class BoardServiceTest {
                 .title("제목")
                 .contents("내용")
                 .build();
-        Board board = boardRequestDto.toEntity(user);
+        Board board = new Board(boardRequestDto, user);
         when(boardRepository.save(any(Board.class))).thenReturn(board);
 
         // when
@@ -60,14 +60,22 @@ class BoardServiceTest {
     @Test
     void getBoardList() {
         // given
-        Board board1 = Board.builder()
+        User user = User.builder()
+                .username("사용자명")
+                .password("123456")
+                .role(Role.USER)
+                .build();
+        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+        BoardRequestDto boardRequestDto1 = BoardRequestDto.builder()
                 .title("제목1")
                 .contents("내용1")
                 .build();
-        Board board2 = Board.builder()
+        Board board1 = new Board(boardRequestDto1, user);
+        BoardRequestDto boardRequestDto2 = BoardRequestDto.builder()
                 .title("제목2")
                 .contents("내용2")
                 .build();
+        Board board2 = new Board(boardRequestDto2, user);
         List<Board> boardListSample = List.of(board1, board2);
 
         when(boardRepository.findAll()).thenReturn(boardListSample);
@@ -87,20 +95,26 @@ class BoardServiceTest {
     @Test
     void getBoardById() {
         // given
-        Long boardId = 1L;
-        Board boardSample = Board.builder()
-                .id(boardId)
+        User user = User.builder()
+                .username("사용자명")
+                .password("123456")
+                .role(Role.USER)
+                .build();
+        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+
+        BoardRequestDto boardRequestDto = BoardRequestDto.builder()
                 .title("제목")
                 .contents("내용")
                 .build();
-        when(boardRepository.findById(boardId)).thenReturn(Optional.of(boardSample));
+        Board board = new Board(boardRequestDto, user);
+        when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
 
         // when
-        Board foundBoard = boardService.getBoardById(boardId);
+        Board foundBoard = boardService.getBoardById(board.getId());
 
         // then
         assertNotNull(foundBoard);
-        assertEquals(boardId, foundBoard.getId());
+        assertEquals(board.getId(), foundBoard.getId());
         assertEquals("제목", foundBoard.getTitle());
         assertEquals("내용", foundBoard.getContents());
     }
@@ -125,22 +139,17 @@ class BoardServiceTest {
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
-        Long boardId = 1L;
         BoardRequestDto newBoardRequestDto = BoardRequestDto.builder()
                 .title("새로운 제목")
                 .contents("새로운 내용")
                 .build();
 
-        Board existingBoard = Board.builder()
-                .title("제목")
-                .contents("내용")
-                .user(user)
-                .build();
+        Board existingBoard = new Board(newBoardRequestDto, user);
 
-        when(boardRepository.findById(boardId)).thenReturn(Optional.of(existingBoard));
+        when(boardRepository.findById(existingBoard.getId())).thenReturn(Optional.of(existingBoard));
 
         // when
-        Board updateBoard = boardService.updateBoard(boardId, newBoardRequestDto, userDetails);
+        Board updateBoard = boardService.updateBoard(existingBoard.getId(), newBoardRequestDto, userDetails);
 
         // then
         assertNotNull(updateBoard);
@@ -163,16 +172,15 @@ class BoardServiceTest {
                 .role(Role.USER)
                 .build();
 
-        Long boardId = 1L;
 
-        Board board = Board.builder()
-                .id(boardId)
-                .title("제목")
-                .contents("내용")
-                .user(boardUser)
+        BoardRequestDto boardRequestDto = BoardRequestDto.builder()
+                .title("새로운 제목")
+                .contents("새로운 내용")
                 .build();
 
-        when(boardRepository.findById(boardId)).thenReturn(Optional.of(board));
+        Board board = new Board(boardRequestDto, boardUser);
+
+        when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
 
         BoardRequestDto newBoardRequestDto = BoardRequestDto.builder()
                 .title("새로운 제목")
@@ -181,7 +189,7 @@ class BoardServiceTest {
 
 
         // when & then
-        assertThrows(UnauthorizedAccessException.class, () -> boardService.updateBoard(boardId, newBoardRequestDto, userDetails));
+        assertThrows(UnauthorizedAccessException.class, () -> boardService.updateBoard(board.getId(), newBoardRequestDto, userDetails));
     }
 
     @Test
@@ -194,13 +202,13 @@ class BoardServiceTest {
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
-        Long boardId = 1L;
-        Board existingBoard = Board.builder()
-                .id(boardId)
-                .title("제목")
-                .contents("내용")
-                .user(user)
+        BoardRequestDto boardRequestDto = BoardRequestDto.builder()
+                .title("새로운 제목")
+                .contents("새로운 내용")
                 .build();
+
+        Board existingBoard = new Board(boardRequestDto, user);
+        Long boardId = existingBoard.getId();
 
         when(boardRepository.findById(boardId)).thenReturn(Optional.of(existingBoard));
         doNothing().when(boardRepository).deleteById(boardId);
@@ -228,13 +236,13 @@ class BoardServiceTest {
                 .role(Role.USER)
                 .build();
 
-        Long boardId = 1L;
-        Board existingBoard = Board.builder()
-                .id(boardId)
-                .title("제목")
-                .contents("내용")
-                .user(boardUser)
+        BoardRequestDto boardRequestDto = BoardRequestDto.builder()
+                .title("새로운 제목")
+                .contents("새로운 내용")
                 .build();
+
+        Board existingBoard = new Board(boardRequestDto, boardUser);
+        Long boardId = existingBoard.getId();
 
         when(boardRepository.findById(boardId)).thenReturn(Optional.of(existingBoard));
 
