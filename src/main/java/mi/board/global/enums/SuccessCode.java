@@ -11,8 +11,13 @@ public enum SuccessCode {
     BOARD_CREATE_SUCCESS(HttpStatus.CREATED, "게시글 작성을 성공하였습니다."),
     BOARD_GET_SUCCESS(HttpStatus.OK, "게시글 조회를 성공했습니다."),
     BOARD_UPDATE_SUCCESS(HttpStatus.OK, "게시글 수정을 성공했습니다."),
-    BOARD_DELETE_SUCCESS(HttpStatus.OK, "게시글 삭제를 성공했습니다.")
-    ;
+    BOARD_DELETE_SUCCESS(HttpStatus.OK, "게시글 삭제를 성공했습니다."),
+    // COMMENT
+    COMMENT_CREATE_SUCCESS(HttpStatus.CREATED, "댓글 작성을 성공하였습니다."),
+    COMMENT_GET_SUCCESS(HttpStatus.OK, "댓글 조회를 성공했습니다."),
+    COMMENT_UPDATE_SUCCESS(HttpStatus.OK, "댓글 수정을 성공했습니다."),
+    COMMENT_DELETE_SUCCESS(HttpStatus.OK, "댓글 삭제를 성공했습니다.");
+
     private final HttpStatus httpStatus;
     private final String detail;
 
