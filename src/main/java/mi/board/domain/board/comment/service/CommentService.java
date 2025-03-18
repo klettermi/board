@@ -39,9 +39,9 @@ public class CommentService {
                 .orElseThrow(CommentNotFoundException::new);
     }
 
-    // 댓글 수정
     @Transactional
     public Comment updateComment(Long commentId, CommentRequestDto commentRequestDto, UserDetailsImpl userDetails) {
+        // 댓글을 ID로 찾아오기
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(CommentNotFoundException::new);
 
@@ -50,9 +50,13 @@ public class CommentService {
             throw new UnauthorizedAccessException();
         }
 
+        // 댓글 내용 업데이트
         comment.update(commentRequestDto.getContent());
+
+        // 수정된 댓글 저장 후 반환
         return commentRepository.save(comment);
     }
+
 
     // 댓글 삭제
     @Transactional

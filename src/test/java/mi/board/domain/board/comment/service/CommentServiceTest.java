@@ -151,11 +151,13 @@ class CommentServiceTest {
                 .build();
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
+        // Board와 Comment 객체 생성
         BoardRequestDto boardRequestDto = BoardRequestDto.builder()
                 .title("제목")
                 .contents("내용")
                 .build();
         Board board = new Board(boardRequestDto, user);
+
         CommentRequestDto commentRequestDto = CommentRequestDto.builder()
                 .content("기존 댓글 내용")
                 .build();
@@ -163,18 +165,25 @@ class CommentServiceTest {
                 .content("새로운 댓글 내용")
                 .build();
 
+        // 기존 댓글 객체 생성
         Comment existingComment = new Comment(commentRequestDto, board, user);
 
+        // 댓글 수정 후 반환할 객체 생성
+        Comment updatedComment = new Comment(newCommentRequestDto, board, user);
+
+        // Mocking behavior
         when(commentRepository.findById(existingComment.getId())).thenReturn(Optional.of(existingComment));
-        // Mock the behavior of update() if necessary, depending on your implementation
+        when(commentRepository.save(any(Comment.class))).thenReturn(updatedComment); // save()가 수정된 댓글을 반환하도록 Mock 설정
 
         // when
-        Comment updatedComment = commentService.updateComment(existingComment.getId(), newCommentRequestDto, userDetails);
+        Comment result = commentService.updateComment(existingComment.getId(), newCommentRequestDto, userDetails);
 
         // then
-        assertNotNull(updatedComment);
-        assertEquals("새로운 댓글 내용", updatedComment.getContent());
+        assertNotNull(result);  // 결과가 null이 아닌지 확인
+        assertEquals("새로운 댓글 내용", result.getContent());  // 댓글 내용이 예상대로 수정되었는지 확인
+        verify(commentRepository, times(1)).save(any(Comment.class));  // save()가 한 번 호출되었는지 검증
     }
+
 
 
     @Test
